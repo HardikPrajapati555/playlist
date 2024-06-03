@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Video Stream</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Video Stream</h1>
+        <div id="video-container"></div>
+    </div>
+    <script src="led-scripts.js"></script>
+    <script>
+        async function loadVideo() {
+    const response = await fetch('http://localhost:3000/videos');
+    const videos = await response.json();
+
+    if (videos.length > 0) {
+        const latestVideo = videos[videos.length - 1]; // Get the latest video
+
+        const videoContainer = document.getElementById('video-container');
+        videoContainer.innerHTML = '';
+
+        const videoElement = document.createElement('video');
+        videoElement.src = latestVideo.url;
+        videoElement.controls = true;
+        videoElement.autoplay = true;
+
+        videoContainer.appendChild(videoElement);
+    }
+}
+
+loadVideo();
+
+    </script>
+</body>
+</html>
+
